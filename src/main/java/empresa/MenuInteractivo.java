@@ -29,17 +29,18 @@ public class MenuInteractivo {
 
 				System.out.println("Código del producto");
 				String codigo = lectura.nextLine();
-				System.out.println("");
+				System.out.println("Nombre del producto");
 				String nombre = lectura.nextLine();
-				System.out.println("");
-				String precio = lectura.nextLine();
-				System.out.println("");
-				String cantidad = lectura.nextLine();
-				lectura.nextLine();
+				System.out.println("precio del producto");
+				double precio = lectura.nextDouble();
+				System.out.println("cantidad de producto");
+				int cantidad = lectura.nextInt();
 
-				producto p = new producto(codigo, nombre, opcion, opcion);
+				producto p = new producto(codigo, nombre, precio, cantidad);
 
 				inventario.agregarProducto(p);
+				
+				break;
 
 			case 2:
 
@@ -49,20 +50,46 @@ public class MenuInteractivo {
 					System.out.println("La lista está vacía");
 				} else {
 					for (producto producto : productos) {
-						System.out.println(productos);
+						System.out.println(producto);
 					}
 				}
-
+				
+				break;
 			case 3:
 				
-				String codigo = lectura.nextLine();
-                producto p = inventario.buscarProductoPorCodigo(codigo);
+				String codigo1 = lectura.nextLine();
+                producto p1 = inventario.buscarProductoPorCodigo(codigo1);
                 
-                if (codigo == null) {
+                if (p1 == null) {
                 	System.out.println("Producto no encontrado");
                 } else {
-                	System.out.println(p);
+                	System.out.println(p1);
                 }
+                break;
+                
+			case 4:
+				
+
+				System.out.println("Código del producto");
+				String codigo2 = lectura.nextLine();
+				System.out.println("Introduce el nuevo precio del producto");
+				double nuevoprecio = lectura.nextDouble();
+				lectura.nextLine();
+				System.out.println("Introduce las cantidades de este producto");
+				int nuevacantidad = lectura.nextInt();
+				lectura.nextLine();
+				
+				inventario.actualizarProducto(codigo2, nuevoprecio, nuevacantidad);
+				
+				break;
+			case 5:
+			    System.out.println("Código del producto a eliminar:");
+			    String codigoEliminar = lectura.nextLine();
+			    
+			    inventario.eliminarProducto(codigoEliminar);
+			    break;
+				
+				
 			}
 
 		} while (opcion != 6);

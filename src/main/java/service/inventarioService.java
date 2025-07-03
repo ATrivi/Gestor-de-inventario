@@ -43,12 +43,20 @@ public class inventarioService {
 	}
 
 	public void eliminarProducto(String codigo) {
+	    producto aEliminar = null;
 
-		for (producto p : inventario) {
-			if (p != null) {
-				inventario.remove(p);
-			}
+	    for (producto p : inventario) {
+	        if (p.getCodigo().equalsIgnoreCase(codigo)) {
+	            aEliminar = p;
+	            break;
+	        }
+	    }
 
-		}
+	    if (aEliminar != null) {
+	        inventario.remove(aEliminar);
+	        System.out.println("Producto eliminado correctamente.");
+	    } else {
+	        System.out.println("Producto no encontrado.");
+	    }
 	}
 }
