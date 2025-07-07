@@ -1,60 +1,44 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "productos")
+
 public class producto {
+
+	@Id
+	@Column (name = "product_code", nullable = false)
+	private Integer product_code = 0;
 	
-	private String codigo; 
-	private String nombre;
-	private double precio; 
-	private int cantidad;
+	@Column (name = "name",  nullable = false)
+	private String product_name;
 	
 	public producto () {}
 	
-	public producto (String codigo, String nombre, double precio, int cantidad) {
-		
-		this.codigo = codigo;
-		this.nombre = nombre;
-		this.precio = precio;
-		this.cantidad = cantidad;
+	public producto(Integer product_code, String product_name) {
+		this.product_code = product_code;
+		this.product_name = product_name;
 	}
 
-	public String getCodigo() {
-		return codigo;
+	public Integer getProduct_code() {
+		return product_code;
 	}
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setProduct_code(Integer product_code) {
+		this.product_code = product_code;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getProduct_name() {
+		return product_name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public double getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
-
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
 	}
 	
-	@Override
-	public String toString() {
-	    return "Código: " + codigo +
-	           ", Nombre: " + nombre +
-	           ", Precio: " + precio +
-	           ", Cantidad: " + cantidad;
-	}
-
+	
 }

@@ -3,13 +3,14 @@ package empresa;
 import java.util.List;
 import java.util.Scanner;
 
+import DAO.*;
 import model.producto;
-import service.*;
 
 public class MenuInteractivo {
 	public static void main(String[] args) {
 
-		inventarioService inventario = new inventarioService();
+		ProductoDAO inventario = new ProductoDAO();
+		producto NuevoProducto = new producto();
 		Scanner lectura = new Scanner(System.in);
 		int opcion;
 
@@ -28,67 +29,69 @@ public class MenuInteractivo {
 			case 1:
 
 				System.out.println("Código del producto");
-				String codigo = lectura.nextLine();
+				int codigo = lectura.nextInt();
+				lectura.nextLine();
 				System.out.println("Nombre del producto");
 				String nombre = lectura.nextLine();
 				System.out.println("precio del producto");
-				double precio = lectura.nextDouble();
-				System.out.println("cantidad de producto");
-				int cantidad = lectura.nextInt();
-
-				producto p = new producto(codigo, nombre, precio, cantidad);
-
-				inventario.agregarProducto(p);
+				
+				producto nuevoProducto = new producto(codigo, nombre);
+				inventario.guardarProducto(nuevoProducto);
 				
 				break;
 
 			case 2:
+				
+				List<producto> productos = inventario.obtenerTodosLosProductos();
+		        System.out.println("Lista de productos:");
+		        for (producto u : productos) {
+		            System.out.println(u.getProduct_code() + " - " + u.getProduct_name());
+		        }
 
-				List<producto> productos = inventario.listarProductos();
-
-				if (productos.isEmpty()) {
-					System.out.println("La lista está vacía");
-				} else {
-					for (producto producto : productos) {
-						System.out.println(producto);
-					}
-				}
+				inventario.obtenerTodosLosProductos();
 				
 				break;
+				
 			case 3:
 				
-				String codigo1 = lectura.nextLine();
-                producto p1 = inventario.buscarProductoPorCodigo(codigo1);
-                
-                if (p1 == null) {
-                	System.out.println("Producto no encontrado");
-                } else {
-                	System.out.println(p1);
-                }
+				System.out.println("Introduce el código del producto:");
+				int cod = lectura.nextInt();
+				lectura.nextLine();
+				producto encontrado = inventario.obtenerProductoPorCodigo(cod);
+				
+				if (encontrado != null) {
+					System.out.println("Producto encontrado:");
+					System.out.println("Código del producto:" + encontrado.getProduct_code());
+					System.out.println("Nombre del producto:" + encontrado.getProduct_name());
+				} else {
+					System.out.println("No se ha encontrado el producto");
+				}
                 break;
                 
 			case 4:
 				
+				System.out.println("Código del producto a actualizar:");
+				int actualizarCod = lectura.nextInt();
+				lectura.nextLine();
 
-				System.out.println("Código del producto");
-				String codigo2 = lectura.nextLine();
-				System.out.println("Introduce el nuevo precio del producto");
-				double nuevoprecio = lectura.nextDouble();
-				lectura.nextLine();
-				System.out.println("Introduce las cantidades de este producto");
-				int nuevacantidad = lectura.nextInt();
-				lectura.nextLine();
-				
-				inventario.actualizarProducto(codigo2, nuevoprecio, nuevacantidad);
-				
+				producto prodActualizar = inventario.obtenerProductoPorCodigo(actualizarCod);
+				if (prodActualizar != null) {
+					System.out.println("Nuevo nombre:");
+					String nuevoNombre = lectura.nextLine();
+					prodActualizar.setProduct_name(nuevoNombre);
+					inventario.actualizarProducto(prodActualizar);
+				} else {
+					System.out.println("Producto no encontrado");
+				}
 				break;
 			case 5:
-			    System.out.println("Código del producto a eliminar:");
-			    String codigoEliminar = lectura.nextLine();
-			    
-			    inventario.eliminarProducto(codigoEliminar);
-			    break;
 				
+				System.out.println("Introduce el código del producto a eliminar:");
+				int idEliminar = lectura.nextInt();
+				lectura.nextLine();
+				inventario.eliminarProducto(idEliminar);
+				
+				break;
 				
 			}
 
@@ -96,5 +99,3 @@ public class MenuInteractivo {
 
 	}
 }
-
-//cvometario
